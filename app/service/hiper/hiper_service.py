@@ -8,11 +8,13 @@ class HiperService:
         self.headers = {'Authorization': None}
         self.auth()
 
-    def get_products(self):
+    def get_products(self, sync_point=0):
+        print(f"Getting products using sync point [{sync_point}]")
         base_url_products = f'{os.environ.get("APP_HIPER_URL")}/api/v1/produtos/pontoDeSincronizacao'
-        response = requests.get(base_url_products, headers=self.headers)
+        sync_point_data = {"pontoDeSincronizacao": sync_point}
+        response = requests.get(base_url_products, headers=self.headers, data=sync_point_data).json()
 
-        return response.json()['produtos']
+        return response['produtos'], response["pontoDeSincronizacao"]
 
     def auth(self):
         print("Starting authentication with Hiper.")

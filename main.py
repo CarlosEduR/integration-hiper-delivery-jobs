@@ -1,6 +1,6 @@
-from dotenv import load_dotenv
-import schedule
 import time
+import schedule
+from dotenv import load_dotenv
 
 from app import synchronization_service
 

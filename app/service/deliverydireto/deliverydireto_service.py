@@ -168,12 +168,14 @@ class DeliveryDiretoService:
             print(f"Product [{product_from_source['nome']}] updated at Delivery Direto.")
 
     def create_products(self, products_from_source):
+        products = [product for product in products_from_source if product['categoria'] is not None]
+
         all_categories = self.get_all_categories()
         all_products = []
         for category in all_categories:
             all_products.extend(self.get_products_by_category(category["id"]))
 
-        for product in products_from_source:
+        for product in products:
             category = next((c for c in all_categories if c["name"] == product["categoria"].capitalize()), None)
             existing_product = next((p for p in all_products if p["customCode"] == product["id"]), None)
             if not existing_product:
