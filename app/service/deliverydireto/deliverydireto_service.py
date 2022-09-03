@@ -144,7 +144,11 @@ class DeliveryDiretoService:
         print(f"Updating product [{product_from_source['nome']}] at Delivery Direto.")
 
         status_value = "ACTIVE"
-        if not product_from_source["ativo"]: status_value = "SHORT_SUPPLY"
+        if not product_from_source["ativo"]:
+            status_value = "SHORT_SUPPLY"
+
+        if not product_from_source["quantidadeEmEstoque"] > 0:
+            status_value = "SHORT_SUPPLY"
 
         product_data = {
             "name": product_from_source["nome"],
